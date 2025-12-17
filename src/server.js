@@ -1,14 +1,22 @@
 import express from "express";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
-const PORT = 8383;
+const PORT = process.env.PORT || 8383;
 
-// Middleware
-app.use(express.json())
+const __filename = fileURLToPath(import.meta.url); // Get the File Path
+const __dirname = dirname(__filename); // Get the Directory Path
+
+// Middleware (built-in)
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "../public"))); // Serving Static Files
+// Middleware (custom)
+
 
 // app.method (route, handler)
 app.get("/", (req, res) => {
-  res.send("Welcome to the server");
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // app.listen(port, callback)
