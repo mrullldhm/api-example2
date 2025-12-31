@@ -251,7 +251,7 @@
 
     async function fetchTodos() {
         isLoading = true
-        const response = await fetch(apiBase + 'todos', {
+        const response = await fetch(apiBase + 'todo', {
             headers: { 'Authorization': token }
         })
         const todosData = await response.json()
@@ -262,7 +262,7 @@
 
     async function updateTodo(index) {
         // set task complete status to true
-        await fetch(apiBase + 'todos' + '/' + index, {
+        await fetch(apiBase + 'todo' + '/' + index, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -275,7 +275,7 @@
 
     async function deleteTodo(index) {
         // set task complete status to true
-        await fetch(apiBase + 'todos' + '/' + index, {
+        await fetch(apiBase + 'todo' + '/' + index, {
             method: 'DELETE',
             headers: {
                 'Authorization': token
@@ -291,7 +291,7 @@
 
         if (!task) { return }
 
-        await fetch(apiBase + 'todos', {
+        await fetch(apiBase + 'todo', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
