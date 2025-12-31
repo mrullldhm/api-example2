@@ -1,25 +1,19 @@
+import db from "../database/db.js";
+
 export const getTodo = (req, res) => {
-  try {
-    const getTodos = db.prepare("SELECT * FROM todos WHERE user_id = ?");
-    const todos = getTodos.all(req.userId);
-    res.json(todos);
-  } catch (err) {
-    next(err);
-  }
+  const getTodos = db.prepare("SELECT * FROM todos WHERE user_id = ?");
+  const todos = getTodos.all(req.userId);
+  res.json(todos);
 };
 
 export const createTodo = (req, res) => {
-  try {
-    const { task } = req.body;
-    const insertTodo = db.prepare(
-      `INSERT INTO todos (user_id, task) VALUES (?, ?)`
-    );
-    const result = insertTodo.run(req.userId, task);
+  const { task } = req.body;
+  const insertTodo = db.prepare(
+    `INSERT INTO todos (user_id, task) VALUES (?, ?)`
+  );
+  const result = insertTodo.run(req.userId, task);
 
-    res.json({ id: result.lastInsertRowid, task, completed: 0 });
-  } catch (err) {
-    next(err);
-  }
+  res.json({ id: result.lastInsertRowid, task, completed: 0 });
 };
 
 export const updateTodo = (req, res) => {
@@ -40,16 +34,12 @@ export const updateTodo = (req, res) => {
 };
 
 export const deleteTodo = (req, res) => {
-  try {
-    const { id } = req.params;
-    const userId = req.userId;
-    const deleteTodo = db.prepare(
-      `DELETE FROM todos WHERE id = ? AND user_id = ?`
-    );
-    deleteTodo.run(id, userId);
+  const { id } = req.params;
+  const userId = req.userId;
+  const deleteTodo = db.prepare(
+    `DELETE FROM todos WHERE id = ? AND user_id = ?`
+  );
+  deleteTodo.run(id, userId);
 
-    res.send({ message: "Todo deleted" });
-  } catch (err) {
-    next(err);
-  }
+  res.send({ message: "Todo deleted" });
 };
